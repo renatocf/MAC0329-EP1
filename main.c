@@ -40,7 +40,6 @@ int main(int argc, char **argv)
 char **analyse_convert(char **i_matrix)
 {
     int i, result;
-    char **o_matrix;
     char grammar[G_SIZE][W_SIZE] = 
     {
         "LDA", "STA", "ADD", "SUB", "MUL", "DIV", "REM", "REV", 
@@ -93,7 +92,7 @@ void make_output_line(int i, int result, char **matrix)
             break;
         case SUB: /*22*/
             matrix[i][1] = '2'; matrix[i][2] = '2';
-            break; /
+            break; 
         case MUL: /*23*/
             matrix[i][1] = '2'; matrix[i][2] = '3';
             break;
