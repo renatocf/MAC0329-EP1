@@ -26,6 +26,7 @@
 #define JLT 16
 #define JGE 17
 #define STP 18
+#define NUMBER '+'
 
 char **analyse_convert(char **i_matrix);
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE]);
@@ -42,6 +43,7 @@ int main(int argc, char **argv)
     
     teste[0] = "INN20";
     teste[1] = "ADD20";
+    teste[2] = "+2020";
     
     analyse_convert(teste);
     
@@ -66,6 +68,11 @@ char **analyse_convert(char **i_matrix)
             return NULL;
         else 
             i_matrix[i] = make_output_line(i, result, i_matrix);
+        printf("%c", i_matrix[i][0]);
+        printf("%c", i_matrix[i][1]);
+        printf("%c", i_matrix[i][2]);
+        printf("%c", i_matrix[i][3]);
+        printf("%c", i_matrix[i][4]);
     }
     return i_matrix;
 }
@@ -73,6 +80,7 @@ char **analyse_convert(char **i_matrix)
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
 {
     int i = 0;
+    if(line[0] == '+') return NUMBER;
     for(i = 0; i < G_SIZE; i++)
     {
         if(strncmp(line, grammar[i], 3) == 0)
@@ -145,6 +153,9 @@ char *make_output_line(int i, int result, char **matrix)
         case STP:
             out[1] = '7'; out[2] = '0';
             break;
+        case NUMBER:
+            out[1] = matrix[i][1]; 
+            out[2] = matrix[i][2]; 
     }
     return out;
 }
