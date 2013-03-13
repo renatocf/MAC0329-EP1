@@ -63,6 +63,8 @@ char **analyse_convert(char **i_matrix)
         else 
             make_output_line(i, result, i_matrix);
     }
+    
+    return i_matrix;
 }
 
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
