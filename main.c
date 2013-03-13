@@ -29,7 +29,7 @@
 
 char **analyse_convert(char **i_matrix);
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE]);
-/* char * */ void make_output_line(int i, int result, char **matrix);
+char * make_output_line(int i, int result, char **matrix);
 
 int main(int argc, char **argv)
 {
@@ -97,11 +97,10 @@ int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
     return -1;
 }
 
-void make_output_line(int i, int result, char **matrix)
+char *make_output_line(int i, int result, char **matrix)
 {
     char *out = (char *) malloc (W_SIZE * sizeof(*out));
     out[0] = '+'; out[3] = matrix[i][3]; out[4] = matrix[i][4]; 
-    printf("matrix[i][3]: %c\n", matrix[i][3]);
     
     switch(result)
     {
@@ -163,9 +162,5 @@ void make_output_line(int i, int result, char **matrix)
             out[1] = '7'; out[2] = '0';
             break;
     }
-    printf("%c\n", out[0]);
-    printf("%c\n", out[1]);
-    printf("%c\n", out[2]);
-    printf("%c\n", out[3]);
-    printf("%c\n", out[4]);
+    return out;
 }
