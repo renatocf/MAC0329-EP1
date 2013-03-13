@@ -43,13 +43,6 @@ int main(int argc, char **argv)
     teste[0] = "INN20";
     teste[1] = "ADD20";
     
-    /* ch = &a; */
-    /* *ch = 'b'; */
-    /* printf("%c", a); */
-    
-    /* ch = &teste[0][0]; */
-    /* *ch = 'I'; */
-    
     analyse_convert(teste);
     
     return 0;
@@ -66,23 +59,14 @@ char **analyse_convert(char **i_matrix)
         "JLT", "JGE", "STP"
     };
     
-    /* Dinamically allocate the output matrix */
-    /* o_matrix = (char **) malloc(MAX_HEIGHT * sizeof(*o_matrix)); */
-    /* for(i = 0; i < MAX_HEIGHT; i++) */
-    /* { */
-    /*     o_matrix[i] = (char *) malloc(MAX_WIDTH * sizeof(**o_matrix)); */
-    /* } */
-    
-    /* Run the matrix checking for errors */
     for(i = 0; i < MAX_HEIGHT; i++)
     {
         result = check_syntax(i_matrix[i], grammar);
         if(result == -1)
             return NULL;
         else 
-            /* i_matrix[i] = */ make_output_line(i, result, i_matrix);
+            i_matrix[i] = make_output_line(i, result, i_matrix);
     }
-    
     return i_matrix;
 }
 
