@@ -4,7 +4,7 @@
 
 #define MAX_HEIGHT 100
 #define MAX_WIDTH 5
-#define W_SIZE 3
+#define W_SIZE 4
 #define G_SIZE 19
 
 #define LDA 0
@@ -29,10 +29,29 @@
 
 char **analyse_convert(char **i_matrix);
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE]);
-void make_output_line(int i, int result, char **matrix);
+/* char * */ void make_output_line(int i, int result, char **matrix);
 
 int main(int argc, char **argv)
 {
+    char **teste; int i; /* char *ch; char a = 'a'; */
+    teste = (char **) malloc(MAX_HEIGHT * sizeof(*teste));
+    for(i = 0; i < MAX_HEIGHT; i++)
+    {
+        teste[i] = (char *) malloc(MAX_WIDTH * sizeof(**teste));
+    }
+    
+    teste[0] = "INN20";
+    teste[1] = "ADD20";
+    
+    /* ch = &a; */
+    /* *ch = 'b'; */
+    /* printf("%c", a); */
+    
+    /* ch = &teste[0][0]; */
+    /* *ch = 'I'; */
+    
+    analyse_convert(teste);
+    
     return 0;
 }
 
@@ -61,7 +80,7 @@ char **analyse_convert(char **i_matrix)
         if(result == -1)
             return NULL;
         else 
-            make_output_line(i, result, i_matrix);
+            /* i_matrix[i] = */ make_output_line(i, result, i_matrix);
     }
     
     return i_matrix;
@@ -80,65 +99,73 @@ int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
 
 void make_output_line(int i, int result, char **matrix)
 {
-    matrix[i][0] = '+';
-    switch(i)
+    char *out = (char *) malloc (W_SIZE * sizeof(*out));
+    out[0] = '+'; out[3] = matrix[i][3]; out[4] = matrix[i][4]; 
+    printf("matrix[i][3]: %c\n", matrix[i][3]);
+    
+    switch(result)
     {
         case LDA: /*11*/
-            matrix[i][1] = '1'; matrix[i][2] = '1';
+            out[1] = '1'; out[2] = '1';
             break;
         case STA: /*12*/
-            matrix[i][1] = '1'; matrix[i][2] = '2';
+            out[1] = '1'; out[2] = '2';
             break;
         case ADD: /*21*/
-            matrix[i][1] = '2'; matrix[i][2] = '1';
+            out[1] = '2'; out[2] = '1';
             break;
         case SUB: /*22*/
-            matrix[i][1] = '2'; matrix[i][2] = '2';
+            out[1] = '2'; out[2] = '2';
             break; 
         case MUL: /*23*/
-            matrix[i][1] = '2'; matrix[i][2] = '3';
+            out[1] = '2'; out[2] = '3';
             break;
         case DIV: /*24*/
-            matrix[i][1] = '2'; matrix[i][2] = '4';
+            out[1] = '2'; out[2] = '4';
             break;
         case REM: /*25*/
-            matrix[i][1] = '2'; matrix[i][2] = '5';
+            out[1] = '2'; out[2] = '5';
             break;
         case REV: /*29*/
-            matrix[i][1] = '2'; matrix[i][2] = '9';
+            out[1] = '2'; out[2] = '9';
             break;
         case INN:
-            matrix[i][1] = '3'; matrix[i][2] = '1';
+            out[1] = '3'; out[2] = '1';
             break;
         case PRN:
-            matrix[i][1] = '4'; matrix[i][2] = '1';
+            out[1] = '4'; out[2] = '1';
             break;
         case NOP:
-            matrix[i][1] = '5'; matrix[i][2] = '0';
+            out[1] = '5'; out[2] = '0';
             break;
         case JMP:
-            matrix[i][1] = '5'; matrix[i][2] = '1';
+            out[1] = '5'; out[2] = '1';
             break;
         case JLE:
-            matrix[i][1] = '5'; matrix[i][2] = '2';
+            out[1] = '5'; out[2] = '2';
             break;
         case JDZ:
-            matrix[i][1] = '5'; matrix[i][2] = '3';
+            out[1] = '5'; out[2] = '3';
             break;
         case JGT: 
-            matrix[i][1] = '5'; matrix[i][2] = '4';
+            out[1] = '5'; out[2] = '4';
             break;
         case JEQ:
-            matrix[i][1] = '5'; matrix[i][2] = '5';
+            out[1] = '5'; out[2] = '5';
             break;
         case JLT:
-            matrix[i][1] = '5'; matrix[i][2] = '6';
+            out[1] = '5'; out[2] = '6';
             break;
         case JGE:
-            matrix[i][1] = '5'; matrix[i][2] = '7';
+            out[1] = '5'; out[2] = '7';
             break;
         case STP:
-            matrix[i][1] = '7'; matrix[i][2] = '0';
+            out[1] = '7'; out[2] = '0';
             break;
     }
+    printf("%c\n", out[0]);
+    printf("%c\n", out[1]);
+    printf("%c\n", out[2]);
+    printf("%c\n", out[3]);
+    printf("%c\n", out[4]);
 }
