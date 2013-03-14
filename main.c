@@ -27,6 +27,8 @@
 #define JGE 17
 #define STP 18
 #define NUMBER '+'
+#define BLANK_LINE -1
+#define SYNTAX_ERROR -2
 
 char **analyse_convert(char **i_matrix);
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE]);
@@ -44,6 +46,8 @@ int main(int argc, char **argv)
     teste[0] = "INN20";
     teste[1] = "ADD20";
     teste[2] = "+2020";
+    teste[3] = "\n";
+    teste[4] = "+2020";
     
     analyse_convert(teste);
     
@@ -64,15 +68,21 @@ char **analyse_convert(char **i_matrix)
     for(i = 0; i < MAX_HEIGHT; i++)
     {
         result = check_syntax(i_matrix[i], grammar);
-        if(result == -1)
-            return NULL;
-        else 
-            i_matrix[i] = make_output_line(i, result, i_matrix);
+        switch(result)
+        {
+            case SYNTAX_ERROR:
+                return NULL; break;
+            case BLANK_LINE:
+                break;
+            default:
+                i_matrix[i] = make_output_line(i, result, i_matrix);
+        }
+        printf("linha i=%d ", i);
         printf("%c", i_matrix[i][0]);
         printf("%c", i_matrix[i][1]);
         printf("%c", i_matrix[i][2]);
         printf("%c", i_matrix[i][3]);
-        printf("%c", i_matrix[i][4]);
+        printf("%c\n", i_matrix[i][4]);
     }
     return i_matrix;
 }
@@ -81,12 +91,13 @@ int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
 {
     int i = 0;
     if(line[0] == '+') return NUMBER;
+    if(line[0] == '\n') return BLANK_LINE;
     for(i = 0; i < G_SIZE; i++)
     {
         if(strncmp(line, grammar[i], 3) == 0)
             return i;
     }
-    return -1;
+    return SYNTAX_ERROR;
 }
 
 char *make_output_line(int i, int result, char **matrix)
