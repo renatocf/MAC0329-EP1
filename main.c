@@ -137,37 +137,37 @@ char *make_output_line(int i, int result, char **matrix)
         case REV: /*29*/
             out[1] = '2'; out[2] = '9';
             break;
-        case INN:
+        case INN: /*31*/
             out[1] = '3'; out[2] = '1';
             break;
-        case PRN:
+        case PRN: /*41*/
             out[1] = '4'; out[2] = '1';
             break;
-        case NOP:
+        case NOP: /*50*/
             out[1] = '5'; out[2] = '0';
             break;
-        case JMP:
+        case JMP: /*51*/
             out[1] = '5'; out[2] = '1';
             break;
-        case JLE:
+        case JLE: /*52*/
             out[1] = '5'; out[2] = '2';
             break;
-        case JDZ:
+        case JDZ: /*53*/
             out[1] = '5'; out[2] = '3';
             break;
-        case JGT: 
+        case JGT: /*54*/
             out[1] = '5'; out[2] = '4';
             break;
-        case JEQ:
+        case JEQ: /*55*/
             out[1] = '5'; out[2] = '5';
             break;
-        case JLT:
+        case JLT: /*56*/
             out[1] = '5'; out[2] = '6';
             break;
-        case JGE:
+        case JGE: /*57*/
             out[1] = '5'; out[2] = '7';
             break;
-        case STP:
+        case STP: /*70*/
             out[1] = '7'; out[2] = '0';
             break;
         case NEG_NUMBER:
