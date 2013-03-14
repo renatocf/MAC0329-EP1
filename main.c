@@ -44,10 +44,10 @@ char * make_output_line(int line, int command, char **matrix);
 int main(int argc, char **argv)
 {
     char **teste; int i; /* char *ch; char a = 'a'; */
-    teste = (char **) malloc(MAX_HEIGHT * sizeof(*teste));
+    teste = (char **) malloc(MAX_HEIGHT * sizeof(char *));
     for(i = 0; i < MAX_HEIGHT; i++)
     {
-        teste[i] = (char *) malloc(MAX_WIDTH * sizeof(**teste));
+        teste[i] = (char *) malloc(MAX_WIDTH * sizeof(char));
     }
     
     teste[0] = "INN20";
@@ -58,9 +58,12 @@ int main(int argc, char **argv)
     
     analyse_convert(teste);
     
+    printf("After conversion:\n");
+    for(i = 0; i < MAX_HEIGHT-80; i++)
+        printf("%2.d %s\n", i, teste[i]);
+    
     return 0;
 }
-
 
 char **analyse_convert(char **i_matrix)
 {
