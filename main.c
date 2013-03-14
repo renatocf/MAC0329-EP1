@@ -2,11 +2,15 @@
 #include<stdlib.h>
 #include<string.h>
 
+/* Tamanho para a matriz de entrada/saída */
 #define MAX_HEIGHT 100
 #define MAX_WIDTH 5
+
+/* Tamanho para a tabela de comandos */
 #define W_SIZE 4
 #define G_SIZE 19
 
+/* Comandos do HIPO */
 #define LDA 0
 #define STA 1
 #define ADD 2
@@ -26,6 +30,8 @@
 #define JLT 16
 #define JGE 17
 #define STP 18
+
+/* Constantes, linha em branco e erros */
 #define POS_NUMBER '+'
 #define NEG_NUMBER '-'
 #define BLANK_LINE -1
@@ -33,7 +39,7 @@
 
 char **analyse_convert(char **i_matrix);
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE]);
-char * make_output_line(int i, int result, char **matrix);
+char * make_output_line(int line, int command, char **matrix);
 
 int main(int argc, char **argv)
 {
@@ -106,12 +112,14 @@ int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
     return SYNTAX_ERROR;
 }
 
-char *make_output_line(int i, int result, char **matrix)
+char * make_output_line(int line, int command, char **matrix)
 {
     char *out = (char *) malloc (W_SIZE * sizeof(*out));
-    out[0] = '+'; out[3] = matrix[i][3]; out[4] = matrix[i][4]; 
+    out[0] = '+'; 
+    out[3] = matrix[line][3]; 
+    out[4] = matrix[line][4]; 
     
-    switch(result)
+    switch(command)
     {
         case LDA: /*11*/
             out[1] = '1'; out[2] = '1';
@@ -173,8 +181,8 @@ char *make_output_line(int i, int result, char **matrix)
         case NEG_NUMBER:
             out[0] = '-'; 
         case POS_NUMBER:
-            out[1] = matrix[i][1]; 
-            out[2] = matrix[i][2]; 
+            out[1] = matrix[line][1]; 
+            out[2] = matrix[line][2]; 
     }
     return out;
 }
