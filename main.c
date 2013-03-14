@@ -26,7 +26,8 @@
 #define JLT 16
 #define JGE 17
 #define STP 18
-#define NUMBER '+'
+#define POS_NUMBER '+'
+#define NEG_NUMBER '-'
 #define BLANK_LINE -1
 #define SYNTAX_ERROR -2
 
@@ -47,7 +48,7 @@ int main(int argc, char **argv)
     teste[1] = "ADD20";
     teste[2] = "+2020";
     teste[3] = "\n";
-    teste[4] = "+2020";
+    teste[4] = "-2020";
     
     analyse_convert(teste);
     
@@ -90,12 +91,17 @@ char **analyse_convert(char **i_matrix)
 int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
 {
     int i = 0;
-    if(line[0] == '+') return NUMBER;
-    if(line[0] == '\n') return BLANK_LINE;
-    for(i = 0; i < G_SIZE; i++)
+    switch(line[0])
     {
-        if(strncmp(line, grammar[i], 3) == 0)
-            return i;
+        case '+':
+            return POS_NUMBER;
+        case '-':
+            return NEG_NUMBER;
+        case '\n':
+            return BLANK_LINE;
+        default:
+            for(i = 0; i < G_SIZE; i++)
+                if(strncmp(line, grammar[i], 3) == 0) return i;
     }
     return SYNTAX_ERROR;
 }
@@ -164,7 +170,9 @@ char *make_output_line(int i, int result, char **matrix)
         case STP:
             out[1] = '7'; out[2] = '0';
             break;
-        case NUMBER:
+        case NEG_NUMBER:
+            out[0] = '-'; 
+        case POS_NUMBER:
             out[1] = matrix[i][1]; 
             out[2] = matrix[i][2]; 
     }
