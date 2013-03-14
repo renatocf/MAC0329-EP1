@@ -2,9 +2,18 @@ CC=gcc
 CFLAGS=-ansi -Wall -pedantic -O2
 BIN=bin
 
-hipo_assembler: main.c
+RM=rm -f
+
+hipo_assembler: main.o analyzer.o
 	$(CC) $(CFLAGS) $^ -o $(BIN)/$@
+	@ $(RM) *.o
+
+main.o: main.c
+	$(CC) $(CFLAGS) -c $^
+
+analyzer.o: analyzer.c
+	$(CC) $(CFLAGS) -c $^
 
 .PHONY: GDB
-GDB: main.c
+GDB: analyzer.c analyzer.h
 	$(CC) $(CFLAGS) -g $^ -o $@
