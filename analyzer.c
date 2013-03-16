@@ -58,7 +58,7 @@ char **analyse_convert(char **i_matrix)
         switch(result)
         {
             case SYNTAX_ERROR:
-                return NULL; /* SYNTAX_ERROR  */
+                return NULL;
                 break;
             case BLANK_LINE:
                 break;
@@ -151,6 +151,7 @@ static char *make_output_line(int line, int command, char **matrix)
             break;
         case NOP: /*50*/
             out[1] = '5'; out[2] = '0';
+            out[3] = ' '; out[4] = ' ';
             break;
         case JMP: /*51*/
             out[1] = '5'; out[2] = '1';
@@ -175,6 +176,7 @@ static char *make_output_line(int line, int command, char **matrix)
             break;
         case STP: /*70*/
             out[1] = '7'; out[2] = '0';
+            out[3] = ' '; out[4] = ' ';
             break;
         case NEG_NUMBER:
             out[0] = '-'; 

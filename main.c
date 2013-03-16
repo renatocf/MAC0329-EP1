@@ -16,8 +16,8 @@ int main(int argc, char **argv)
     teste[0] = "INN20";
     teste[1] = "ADD20";
     teste[2] = "+2020";
-    teste[3] = "\n";
-    teste[4] = "-2020";
+    teste[3] = "-2020";
+    teste[4] = "STP  ";
     
     analyse_convert(teste);
     
