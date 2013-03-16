@@ -2,9 +2,20 @@
 #include<stdlib.h>
 #define FALSE 0
 #define TRUE 1
+
+char **entrada(char *argv[]);
+char **funcaoRenatooooo(char **M);
+void saida(char **M, int fimLinha);
+
 int main(int argc, char* argv[])
 {
-    int ligado;
+    entrada(argv);
+     return 0;
+}
+
+char **entrada(char *argv[])
+{
+    int ligado, matrizNula = 0;
     char linha[100];
     int linhaControle[100];
     FILE *arq = fopen(argv[1], "r");
@@ -39,14 +50,16 @@ int main(int argc, char* argv[])
                 }
                 else if(linha[i] == '{')
                 {
-                    M[linhaCont][0] = linha[++i];
-                    M[linhaCont][1] = linha[++i];
-                    M[linhaCont][2] = linha[++i];
-
-                    if(linha[++i]=='}')
+                    i++;
+                    while(linha[i]==' ')i++;
+                    M[linhaCont][0] = linha[i++];
+                    M[linhaCont][1] = linha[i++];
+                    M[linhaCont][2] = linha[i++];
+                    while(linha[i] == ' ') i++;
+                    if(linha[i]=='}')
                     {
-                        linhaControle[k++] = linhaCont;
                         i++;
+                        linhaControle[k++] = linhaCont;
                         while(linha[i]==' ')i++;
                         if(linha[i]>='0' && linha[i]<='9' && linha[++i]>='0' && linha[i] <= '9')
                         {
@@ -57,48 +70,96 @@ int main(int argc, char* argv[])
                         }
                     }
                     else
-                        printf("CONEEEEEEEEE\n");
+                    {
+                        funcaoRenatooooo(NULL);
+                        matrizNula = 1;
+                    }
+
                 }
                 else
-                    printf("Errroooooooooo!!!");
+                {
+                    funcaoRenatooooo(NULL);
+                    matrizNula = 1;
+                }
+
 
                 while(linha[i] == ' ')i++;
                 if(linha[i] != ';' && linha[i]!= '\n')
-                    printf("Errrooooooooooooooooooooooooo!!");
-
+                {
+                    funcaoRenatooooo(NULL);
+                    matrizNula = 1;
+                }
             }
-
         }
-
     }
 
     for(j=0; j<k-1;j++)
     {
         if(linhaControle[j] > linhaControle[j+1])
         {
-            printf("CONEEEEEEEEE3\n");
+            funcaoRenatooooo(NULL);
+            matrizNula = 1;
             break;
         }
     }
-
-    for(j=0; j<100; j++)
+    if(matrizNula == 0)
     {
-        ligado = 0;
-        for(i=0; i<k; i++)
+        for(j=0; j<100; j++)
         {
-            if(j==linhaControle[i])
-                ligado = 1;
+            ligado = 0;
+            for(i=0; i<k; i++)
+            {
+                if(j==linhaControle[i])
+                    ligado = 1;
+            }
+            if(!ligado)
+            {
+                M[j][0] = '\n';
+            }
         }
-        if(!ligado)
-        {
-            M[j][0] = '\n';
-        }
+        funcaoRenatooooo(M);
     }
 
- for(i=0;i<100;i++)
-  for(j=0;j<5;j++)
-    printf("%c",M[i][j]);
+
 
 fclose(arq);
- return 0;
+
+return 0;
+}
+
+char **funcaoRenatooooo(char **M)
+{
+    /*crie uma variável q marque  a última linha q tenha algum caracter diferente de \n e mande-a pra a função saída!! xD
+
+    E caso não tenham números, colocar espaço no lugar deles*/
+    return M;
+}
+
+
+void saida(char **M, int fimLinha)
+{
+    int i, j;
+    FILE *arq1;
+    if((arq1 = fopen("saída.hip", "w"))== NULL)
+    {
+        printf("Erro ao abrir arquivo!!!\n");
+        exit(1);
+    }
+    else
+    {
+        for( i = 0; i<100 && i<=fimLinha; i++)
+        {
+            if(M[i][0]!= '\n')
+            {
+                for(j = 0; j<5; j++)
+                {
+                    fputc(M[i][j],arq1);
+                }
+            }
+            fputc('\n', arq1);
+
+        }
+        fclose(arq1);
+    }
+
 }
