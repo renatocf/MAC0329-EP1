@@ -1,3 +1,7 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+/* Libraries */
 #include "analyzer.h"
 
 int main(int argc, char **argv)

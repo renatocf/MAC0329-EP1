@@ -1,14 +1,56 @@
+/*
+///////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------
+                         MACROS E BIBLIOTECAS     
+----------------------------------------------------------------------
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+#include "HIPO.h"
 #include "analyzer.h"
 
+#define POS_NUMBER '+'
+#define NEG_NUMBER '-'
+#define BLANK_LINE -1
+#define SYNTAX_ERROR -2
+
+/*
+///////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------
+                               PROTÓTIPOS         
+----------------------------------------------------------------------
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+
+/* Comandos do HIPO */
+typedef enum {
+    LDA=0, STA=1, ADD=2, SUB=3, MUL=4, DIV=5, REM=6, REV=7, INN=8, 
+    PRN=9, NOP=10, JMP=11, JLE=12, JDZ=13, JGT=14, JEQ=15, JLT=16, 
+    JGE=17, STP=18 
+} HIPO;
+
+/* Protótipos de funções de uso interno */
+static int 
+check_syntax(char *line, const char grammar[L_SIZE][W_SIZE]);
+static char * 
+make_output_line(int line, int command, char **matrix);
+
+/*
+///////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------
+                         FUNÇÕES DE USO PÚBLICO 
+----------------------------------------------------------------------
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
 char **analyse_convert(char **i_matrix)
+    /* Recebe uma matriz com comandos mneumônicos do HIPO e a devolve
+     * com a tradução para código de máquina. Devolve 'NULL' se houver
+     * erro de sintaxe */
 {
     int i, result;
-    char grammar[G_SIZE][W_SIZE] = 
-    {
-        "LDA", "STA", "ADD", "SUB", "MUL", "DIV", "REM", "REV", 
-        "INN", "PRN", "NOP", "JMP", "JLE", "JDZ", "JGT", "JEQ", 
-        "JLT", "JGE", "STP"
-    };
     
     for(i = 0; i < MAX_HEIGHT; i++)
     {
@@ -16,7 +58,8 @@ char **analyse_convert(char **i_matrix)
         switch(result)
         {
             case SYNTAX_ERROR:
-                return NULL; break;
+                return NULL; /* SYNTAX_ERROR  */
+                break;
             case BLANK_LINE:
                 break;
             default:
@@ -32,7 +75,21 @@ char **analyse_convert(char **i_matrix)
     return i_matrix;
 }
 
-int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
+/*
+///////////////////////////////////////////////////////////////////////
+----------------------------------------------------------------------
+                         FUNÇÕES DE USO PRIVADO 
+----------------------------------------------------------------------
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+*/
+static int check_syntax(char *line, const char grammar[L_SIZE][W_SIZE])
+    /* Recebe uma sring de texto e uma lista de palavras. Devolve:
+     * -> POS_NUMBER se o primeiro caracter for '+';
+     * -> NEG_NUMBER se o 1º caracter for '-'; 
+     * -> BLANK_LINE para 1º caracter '\n'. 
+     * -> Um inteiro representado a palavra encontrada na lista;
+     * -> SYNTAX_ERROR, caso nenhuma das condições anteriores
+     *    valha. */
 {
     int i = 0;
     switch(line[0])
@@ -44,13 +101,16 @@ int check_syntax(char *line, char grammar[G_SIZE][W_SIZE])
         case '\n':
             return BLANK_LINE;
         default:
-            for(i = 0; i < G_SIZE; i++)
+            for(i = 0; i < L_SIZE; i++)
                 if(strncmp(line, grammar[i], 3) == 0) return i;
     }
     return SYNTAX_ERROR;
 }
 
-char * make_output_line(int line, int command, char **matrix)
+static char *make_output_line(int line, int command, char **matrix)
+    /* Cria a partir de 'line' da matriz 'matrix' o correspondente
+     * código de máquina do HIPO, conforme 'command' previamente 
+     * identificado. */ 
 {
     char *out = (char *) malloc (W_SIZE * sizeof(*out));
     out[0] = '+'; 
