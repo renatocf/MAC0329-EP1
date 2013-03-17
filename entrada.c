@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
   devolve uma matriz com os caracteres necessarios para o programa.*/
 char **entrada(char *argv[])
 {
-    int ligado, matrizNula = 0;
+    int ligado;
     char linha[100];
     /*a variável linha[100] irá armazenar a string da linha q estará sendo lida*/
     int linhaControle[100];
@@ -87,47 +87,28 @@ char **entrada(char *argv[])
                     }
                     /*Caso ocorra erro de sintaxe*/
                     else
-                    {
-                        funcaoRenatooooo(NULL);
-                        matrizNula = 1;
-                        /*Como a matriz foi considerada nula, ela não não passará pelo
-                        processo de colocar \n nas linhas em branco e também não enviará
-                        uma matriz com erros para a próxima função*/
-                    }
-
+                        return NULL;
                 }
                 /*Caso ocorra erro de sintaxe*/
                 else
-                {
-                    funcaoRenatooooo(NULL);
-                    matrizNula = 1;
-                }
+                     funcaoRenatooooo(NULL);
 
-               /*Ignora espaços*/
+                /*Ignora espaços*/
                 while(linha[i] == ' ')i++;
                 /*Ṕrocura por caracteres diferentes de ';' e '\n', se achar, significa que ocorreu erro de sintaxe*/
                 if(linha[i] != ';' && linha[i]!= '\n')
-                {
-                    funcaoRenatooooo(NULL);
-                    matrizNula = 1;
-                }
-            }
+                     return NULL;
+
+          }
         }
     }
     /*Verifica se o vetor linhaControle esta ordenado. Caso nao esteja, ocorreu um erro de sintaxe*/
     for(j=0; j<k-1;j++)
-    {
-        if(linhaControle[j] > linhaControle[j+1])
-        {
-            funcaoRenatooooo(NULL);
-            matrizNula = 1;
-            break;
-        }
-    }
+      if(linhaControle[j] > linhaControle[j+1])
+            return NULL;
+
     /*Percorre a matriz colocando '/n' na primeira coluna das linhas que nao estao em linhaControle*/
-    if(matrizNula == 0)
-    {
-        for(j=0; j<100; j++)
+     for(j=0; j<100; j++)
         {
             ligado = 0;
             for(i=0; i<k; i++)
@@ -141,17 +122,15 @@ char **entrada(char *argv[])
                      matriz*/
             }
             if(!ligado)
-            {
-                M[j][0] = '\n';
-            }
+               M[j][0] = '\n';
+
         }
         /*Se chegou ate aqui, significa que a entrada esta sintaxicamente correta.
           Instruçoes erradas serao verificadas pela proxima função*/
-        funcaoRenatooooo(M);
-    }
-    /*Fechando arquivo*/
+
+   /*Fechando arquivo*/
    fclose(arq);
-   return 0;
+   return M;
 }
 
 char **funcaoRenatooooo(char **M)
