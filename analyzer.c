@@ -38,6 +38,8 @@ check_syntax(char *line, const char grammar[L_SIZE][W_SIZE]);
 static char * 
 make_output_line(int line, int command, char **matrix);
 
+int last_line;
+
 /*
 ///////////////////////////////////////////////////////////////////////
 ----------------------------------------------------------------------
@@ -65,12 +67,12 @@ char **analyse_convert(char **i_matrix)
             default:
                 i_matrix[i] = make_output_line(i, result, i_matrix);
         }
-        printf("linha i=%d ", i);
-        printf("%c", i_matrix[i][0]);
-        printf("%c", i_matrix[i][1]);
-        printf("%c", i_matrix[i][2]);
-        printf("%c", i_matrix[i][3]);
-        printf("%c\n", i_matrix[i][4]);
+        /* printf("linha i=%d ", i); */
+        /* printf("%c", i_matrix[i][0]); */
+        /* printf("%c", i_matrix[i][1]); */
+        /* printf("%c", i_matrix[i][2]); */
+        /* printf("%c", i_matrix[i][3]); */
+        /* printf("%c\n", i_matrix[i][4]); */
     }
     return i_matrix;
 }
@@ -95,12 +97,13 @@ static int check_syntax(char *line, const char grammar[L_SIZE][W_SIZE])
     switch(line[0])
     {
         case '+':
-            return POS_NUMBER;
+            last_line = i+1; return POS_NUMBER;
         case '-':
-            return NEG_NUMBER;
+            last_line = i+1; return NEG_NUMBER;
         case '\n':
             return BLANK_LINE;
         default:
+            last_line = i+1;
             for(i = 0; i < L_SIZE; i++)
                 if(strncmp(line, grammar[i], 3) == 0) return i;
     }

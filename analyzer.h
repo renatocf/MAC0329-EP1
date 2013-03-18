@@ -5,3 +5,5 @@ char **analyse_convert(char **i_matrix);
 /* Recebe uma matriz com comandos mneumônicos do HIPO e a devolve
  * com a tradução para código de máquina. Devolve 'NULL' se houver
  * erro de sintaxe */
+
+extern int last_line;
