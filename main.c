@@ -36,6 +36,7 @@ int main(int argc, char **argv)
         return EXIT_FAILURE;
     }
     
+    printf("last line: %d", last_line);
     saida(matrix, last_line, argv[1]);
 
     /* printf("After conversion:\n"); */

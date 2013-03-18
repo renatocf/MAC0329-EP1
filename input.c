@@ -136,6 +136,7 @@ void saida(char **M, int fimLinha, char *nome)
     int i, j;
     FILE *arq1;
     char *saida = strncat(nome, ".hip", strlen(nome)-4);
+    printf("%s\n", saida);
     if((arq1 = fopen(saida, "w")) == NULL)
         /*Criando um arquivo chamado saida.hip*/
     {

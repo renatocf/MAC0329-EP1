@@ -5,7 +5,7 @@ RM=rm -f
 
 hipo_assembler: main.o analyzer.o input.o
 	$(CC) $(CFLAGS) $^ -o $@
-	@ $(RM) *.o *.gch
+	# @ $(RM) *.o *.gch
 
 main.o: main.c
 	$(CC) $(CFLAGS) -c $^
@@ -18,3 +18,7 @@ input.o: input.c input.h
 
 clean:
 	$(RM) *.o *.gch
+
+.PHONY: GDB
+GDB: main.o analyzer.o input.o
+	$(CC) $(CFLAGS) $^ -g -o $@
