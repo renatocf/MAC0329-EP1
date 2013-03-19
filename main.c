@@ -5,6 +5,7 @@
 #include "input.h"
 #include "analyzer.h"
 
+char usage_message[] = "Uso: hipo_assembler arquivo.asm\n";
 char error_message[] = "Erro de sintaxe\n";
 
 int main(int argc, char **argv)
@@ -22,7 +23,11 @@ int main(int argc, char **argv)
     /* teste[2] = "+2020"; */
     /* teste[3] = "-2020"; */
     /* teste[4] = "STP  "; */
-    
+    if(argc != 2) 
+    {
+        printf("\n%s\n", usage_message);
+        return EXIT_FAILURE;
+    }
     
     if((matrix = entrada(argv)) == NULL)
     {

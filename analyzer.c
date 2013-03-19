@@ -65,6 +65,7 @@ char **analyse_convert(char **i_matrix)
             case BLANK_LINE:
                 break;
             default:
+                last_line = i;
                 i_matrix[i] = make_output_line(i, result, i_matrix);
         }
         /* printf("linha i=%d ", i); */
@@ -97,13 +98,12 @@ static int check_syntax(char *line, const char grammar[L_SIZE][W_SIZE])
     switch(line[0])
     {
         case '+':
-            last_line = i+1; return POS_NUMBER;
+            return POS_NUMBER;
         case '-':
-            last_line = i+1; return NEG_NUMBER;
+            return NEG_NUMBER;
         case '\n':
             return BLANK_LINE;
         default:
-            last_line = i+1;
             for(i = 0; i < L_SIZE; i++)
                 if(strncmp(line, grammar[i], 3) == 0) return i;
     }

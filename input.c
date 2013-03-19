@@ -14,11 +14,7 @@ char **entrada(char *argv[])
     int ligado;
     char linha[80];
     /*a variável linha[100] irá armazenar a string da linha q estará sendo lida*/
-<<<<<<< HEAD
-    int linhaControle[100];
-=======
     int linhaControle[80];
->>>>>>> ca3b0d2c4235ed468866e635113eab16e54147c2
     /*Abrindo arquivo passado pelo usuário*/
     FILE *arq = fopen(argv[1], "r");
     char **M;
@@ -43,25 +39,15 @@ char **entrada(char *argv[])
             if(linha[i] >='0' && linha[i] <='9' && linha[++i] >= '0' && linha[i] <='9')
             {   /*Transforma os caracteres do endereço encontrado em inteiro e o guarda
                   em linhaCont, para se saber em qual linha da matriz a instrução deve ser escrita*/
-<<<<<<< HEAD
                 linhaCont = (linha[i-1]-48)*10 + (linha[i]-48);
-=======
-                linhaCont = ((linha[--i])-48)*10 + (linha[++i])-48;
->>>>>>> ca3b0d2c4235ed468866e635113eab16e54147c2
                 i++;
                 /*Ignorando espaços em branco*/
                 while(linha[i] == ' ')i++;
                 if(linha[i] == '+' || linha[i]=='-')
                 {
-<<<<<<< HEAD
                     for(j = i+1; j < 5; j++)
                         if(linha[j] > '9' || linha[j] < '0') return NULL;
-
-=======
-                    for(j = i+1; j < 5; j++) 
-                        if(linha[j] > '9' || linha[j] < '0') return NULL;
                     
->>>>>>> ca3b0d2c4235ed468866e635113eab16e54147c2
                     /*Adiciona os proxmos 5 caractes depois do sinal na matriz*/
                     M[linhaCont][0] = linha[i++];
                     M[linhaCont][1] = linha[i++];
