@@ -1,0 +1,13 @@
+; apos o ponto e virgula temos comentari
+;
+00 {LDA} 10          ; soma valores
+01 {ADD} 11          
+02 {STA} 12          ; fim do programa
+03 {PRN} 12          ; termos da soma
+04 {STP} 
+;
+ -7770
+11 +7777
+
+
+
