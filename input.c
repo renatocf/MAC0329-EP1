@@ -144,7 +144,6 @@ void saida(char **M, int fimLinha, char *nome)
 
     saida = strncpy(saida, nome, i);
     saida = strcat(saida, ".hip");
-    printf("%s\n", saida);
     
     /* Abre arquivo para ser copiado */
     if((arq1 = fopen(saida, "w")) == NULL)
@@ -174,5 +173,4 @@ void saida(char **M, int fimLinha, char *nome)
         fclose(arq1);
         /*Fechamento do arquivo de saida */
     }
-
 }
