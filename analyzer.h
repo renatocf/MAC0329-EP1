@@ -1,3 +1,6 @@
+#ifndef H_ANALYZER_DEFINED
+#define H_ANALYZER_DEFINED
+
 /* Tamanho da matriz de entrada/saída */
 enum matrix { MAX_HEIGHT=100, MAX_WIDTH=5 };
 
@@ -7,3 +10,5 @@ char **analyse_convert(char **i_matrix);
  * erro de sintaxe */
 
 extern int last_line;
+
+#endif

@@ -1,7 +1,7 @@
 #ifndef H_INPUT_DEFINED
 #define H_INPUT_DEFINED
 
-char **entrada(char *argv[]);
+char **entrada(char *nome);
 void saida(char **M, int fimLinha, char *nome);
 
 #endif

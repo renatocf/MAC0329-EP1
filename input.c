@@ -9,14 +9,14 @@
 
 /*Recebe o nome de um arquivo de texto e, caso o arquivo esteja de acordo com a sintaxe HIPO,
   devolve uma matriz com os caracteres necessarios para o programa.*/
-char **entrada(char *argv[])
+char **entrada(char *nome)
 {
     int ligado;
     char linha[80];
     /*a variável linha[100] irá armazenar a string da linha q estará sendo lida*/
     int linhaControle[80];
     /*Abrindo arquivo passado pelo usuário*/
-    FILE *arq = fopen(argv[1], "r");
+    FILE *arq = fopen(nome, "r");
     char **M;
     int i = 0, j, k = 0, linhaCont = 0;
 
@@ -135,10 +135,19 @@ void saida(char **M, int fimLinha, char *nome)
 {
     int i, j;
     FILE *arq1;
-    char *saida = strncat(nome, ".hip", strlen(nome)-4);
+    char *saida;
+    
+    /* Cria nome da funcao de saida */
+    for(i = strlen(nome)-1; i >= 0; i--)
+        if(nome[i] == '.') break;
+    saida = malloc(i * sizeof(*saida));
+
+    saida = strncpy(saida, nome, i);
+    saida = strcat(saida, ".hip");
     printf("%s\n", saida);
+    
+    /* Abre arquivo para ser copiado */
     if((arq1 = fopen(saida, "w")) == NULL)
-        /*Criando um arquivo chamado saida.hip*/
     {
         printf("Erro ao abrir arquivo!!!\n");
         exit(1);
@@ -155,7 +164,7 @@ void saida(char **M, int fimLinha, char *nome)
                 for(j = 0; j<5; j++)
                 {
                     /*Caso haja o caracter em determinada linha da matriz,
-                      imrpimir a linha no arquivo saida.h*/
+                      imrpimir a linha no arquivo de saida */
                     fputc(M[i][j],arq1);
                 }
             }
@@ -163,7 +172,7 @@ void saida(char **M, int fimLinha, char *nome)
             /*Pula a linha de acordo com a mudança de linha da matriz percorrida*/
         }
         fclose(arq1);
-        /*Fechamento do arquivo saida.h*/
+        /*Fechamento do arquivo de saida */
     }
 
 }
