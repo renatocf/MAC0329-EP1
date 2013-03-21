@@ -18,7 +18,7 @@ char **entrada(char *nome)
     int i = 0, j = 0, k = 0, linhaCont = 0; 
     /* Armazena a string da linha a ser lida */
     char linha[80]; 
-    int  linhaControle[80];
+    int  linhaControle[100];
     char **M;
     
     /* Abrindo arquivo passado pelo usuário*/
@@ -36,16 +36,13 @@ char **entrada(char *nome)
     while(fgets(linha, sizeof(linha), arq) != NULL)
     {
         i=0;
-        printf("entrei\n");
-        /* printf("%s\n", linha); */
         
         /* Vai pra proxima linha do arquivo caso 
          * linha[i] == ';' ou linha[i] == '\n'*/
         if(linha[i] != ';' && linha[i]!= '\n')
         {
             /*Ignorando espaços em branco*/
-            while(linha[i] == ' ' || linha[i] == '\t')/* i++; */
-                {printf("caracter: |%c|\n", linha[i]); i++; }
+            while(linha[i] == ' ' || linha[i] == '\t') i++;
             
             if(linha[i] >='0' && linha[i] <='9' 
             && linha[++i] >= '0' && linha[i] <='9')
@@ -57,8 +54,7 @@ char **entrada(char *nome)
                 i++;
                 
                 /*Ignorando espaços em branco*/
-                while(linha[i] == ' ' || linha[i] == '\t')
-                {printf("caracter: |%c|\n", linha[i]); i++; }
+                while(linha[i] == ' ' || linha[i] == '\t') i++;
                 
                 if(linha[i] == '+' || linha[i]=='-')
                 {
@@ -81,8 +77,7 @@ char **entrada(char *nome)
                     i++;
                     
                     /*Ignora os espaços em branco*/
-                    while(linha[i]==' ' || linha[i] == '\t')/* i++; */
-                {printf("caracter: |%c|\n", linha[i]); i++; }
+                    while(linha[i]==' ' || linha[i] == '\t') i++;
                     
                     /*Adiciona os proximos 3 caracteres para a matriz*/
                     M[linhaCont][0] = linha[i++];
@@ -90,8 +85,7 @@ char **entrada(char *nome)
                     M[linhaCont][2] = linha[i++];
                     
                     /*Ignora espaços em branco*/
-                    while(linha[i] == ' ' || linha[i] == '\t') /* i++; */
-                {printf("caracter: |%c|\n", linha[i]); i++; }
+                    while(linha[i] == ' ' || linha[i] == '\t') i++;
                     
                     if(linha[i]=='}')
                     {
@@ -99,7 +93,7 @@ char **entrada(char *nome)
                         linhaControle[k++] = linhaCont;
                         
                         /*Ignora espaços em branco*/
-                        while(linha[i]==' ' || linha[i] == '\t')i++;
+                        while(linha[i]==' ' || linha[i] == '\t') i++;
                         
                         if(linha[i]>='0' && linha[i]<='9' 
                         && linha[++i]>='0' && linha[i]<='9')
@@ -119,8 +113,7 @@ char **entrada(char *nome)
                 else return NULL;
 
                 /*Ignora espaços*/
-                while(linha[i] == ' ' || linha[i] == '\t')/* i++; */
-                {printf("caracter: |%c|\n", linha[i]); i++; }
+                while(linha[i] == ' ' || linha[i] == '\t') i++;
                 
                 /* Procura por caracteres diferentes de ';' e '\n'.
                  * Se achar, significa que ocorreu erro de sintaxe */
@@ -169,14 +162,12 @@ void saida(char **M, int fimLinha, char *nome)
     FILE *arq1;
     char *saida;
     
-    printf("entrie 1\n");
     /* Cria nome da função de saida */
     for(i = strlen(nome)-1; i > 0; i--)
         if(nome[i] == '.') break;
     
     /* Se i for 0, não encontrou ',' */
     if(i == 0) i = strlen(nome)-1;
-    printf("i: %d", i);
     
     saida = malloc(i * sizeof(*saida));
     saida = strcpy(saida, nome);
