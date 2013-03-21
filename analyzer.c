@@ -68,12 +68,6 @@ char **analyse_convert(char **i_matrix)
                 last_line = i;
                 i_matrix[i] = make_output_line(i, result, i_matrix);
         }
-        /* printf("linha i=%d ", i); */
-        /* printf("%c", i_matrix[i][0]); */
-        /* printf("%c", i_matrix[i][1]); */
-        /* printf("%c", i_matrix[i][2]); */
-        /* printf("%c", i_matrix[i][3]); */
-        /* printf("%c\n", i_matrix[i][4]); */
     }
     return i_matrix;
 }

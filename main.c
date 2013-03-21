@@ -11,6 +11,7 @@ char error_message[] = "Erro de sintaxe\n";
 int main(int argc, char **argv)
 {
     char **matrix; /* Matriz auxiliar */
+    int i;
     
     /* Verifica se um argumento foi passado na
      * linha de comando */
@@ -26,6 +27,7 @@ int main(int argc, char **argv)
         printf("\n%s\n", error_message);
         return EXIT_FAILURE;
     }
+
     
     /* Converte mneumônicos do HIPO em código de 
      * máquina a partir da sintaxe correta */
@@ -34,6 +36,9 @@ int main(int argc, char **argv)
         printf("\n%s\n", error_message);
         return EXIT_FAILURE;
     }
+    for(i = 0; i < 100; i++)
+        printf("%d: %s\n", i, matrix[i]);
+    printf("last line: %d\n", last_line);
     
     /* Cria o arquivo de saída (extensão .hip) */
     saida(matrix, last_line, argv[1]);

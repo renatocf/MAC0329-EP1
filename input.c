@@ -2,85 +2,113 @@
 #include<stdlib.h>
 #include<string.h>
 
+/* Bibliotecas */
 #include "input.h"
 
+/* Macros */
 #define FALSE 0
 #define TRUE 1
 
-/*Recebe o nome de um arquivo de texto e, caso o arquivo esteja de acordo com a sintaxe HIPO,
-  devolve uma matriz com os caracteres necessarios para o programa.*/
+/* Recebe o nome de um arquivo de texto e, caso o arquivo esteja de
+ * acordo com a sintaxe HIPO, devolve uma matriz com os caracteres
+ * necessarios para o programa.*/
 char **entrada(char *nome)
 {
-    int ligado;
-    char linha[80];
-    /*a variável linha[100] irá armazenar a string da linha q estará sendo lida*/
-    int linhaControle[80];
-    /*Abrindo arquivo passado pelo usuário*/
-    FILE *arq = fopen(nome, "r");
+    int  ligado;
+    int i = 0, j = 0, k = 0, linhaCont = 0; 
+    /* Armazena a string da linha a ser lida */
+    char linha[80]; 
+    int  linhaControle[80];
     char **M;
-    int i = 0, j, k = 0, linhaCont = 0;
-
+    
+    /* Abrindo arquivo passado pelo usuário*/
+    FILE *arq = fopen(nome, "r");
+    
     /*Criação da matriz que sera retornada*/
     M = malloc(100*sizeof(char*));
     for(i=0;i<100;i++)
         M[i] = malloc(5 * sizeof (char));
 
-    /*Percorre todo o arquivo até que o mesmo acabe ou seja encontrado um erro de sintaxe.
-      Espaços brancos são ignorados desde que nao estejam entre numeros(0 9) ou entre instruções (I NN)*/
+    /* Percorre todo o arquivo até que o mesmo acabe ou seja 
+     * encontrado um erro de sintaxe. Espaços brancos são ignorados 
+     * desde que nao estejam entre numeros (0 9) ou entre instruções 
+     * (I NN)*/
     while(fgets(linha, sizeof(linha), arq) != NULL)
     {
         i=0;
-        /*Vai pra proxima linha do arquivo caso linha[i] == ';' ou linha[i] == '\n'*/
-        if( linha[i] != ';' && linha[i]!= '\n')
+        printf("entrei\n");
+        /* printf("%s\n", linha); */
+        
+        /* Vai pra proxima linha do arquivo caso 
+         * linha[i] == ';' ou linha[i] == '\n'*/
+        if(linha[i] != ';' && linha[i]!= '\n')
         {
             /*Ignorando espaços em branco*/
-            while(linha[i] == ' ')i++;
-
-            if(linha[i] >='0' && linha[i] <='9' && linha[++i] >= '0' && linha[i] <='9')
-            {   /*Transforma os caracteres do endereço encontrado em inteiro e o guarda
-                  em linhaCont, para se saber em qual linha da matriz a instrução deve ser escrita*/
+            while(linha[i] == ' ' || linha[i] == '\t')/* i++; */
+                {printf("caracter: |%c|\n", linha[i]); i++; }
+            
+            if(linha[i] >='0' && linha[i] <='9' 
+            && linha[++i] >= '0' && linha[i] <='9')
+            {   
+                /* Transforma os caracteres do endereço encontrado em
+                 * inteiro e o guarda em linhaCont, para se saber em 
+                 * qual linha da matriz a instrução deve ser escrita */
                 linhaCont = (linha[i-1]-48)*10 + (linha[i]-48);
                 i++;
+                
                 /*Ignorando espaços em branco*/
-                while(linha[i] == ' ')i++;
+                while(linha[i] == ' ' || linha[i] == '\t')
+                {printf("caracter: |%c|\n", linha[i]); i++; }
+                
                 if(linha[i] == '+' || linha[i]=='-')
                 {
                     for(j = i+1; j < 5; j++)
                         if(linha[j] > '9' || linha[j] < '0') return NULL;
                     
-                    /*Adiciona os proxmos 5 caractes depois do sinal na matriz*/
+                    /* Adiciona os 5 próximos caracteres 
+                     * depois do sinal na matriz */
                     M[linhaCont][0] = linha[i++];
                     M[linhaCont][1] = linha[i++];
                     M[linhaCont][2] = linha[i++];
                     M[linhaCont][3] = linha[i++];
                     M[linhaCont][4] = linha[i++];
+                    
                     /*Guarda quais linhas da matriz estarão preenchidas*/
                     linhaControle[k++] = linhaCont;
                 }
                 else if(linha[i] == '{')
                 {
                     i++;
+                    
                     /*Ignora os espaços em branco*/
-                    while(linha[i]==' ')i++;
+                    while(linha[i]==' ' || linha[i] == '\t')/* i++; */
+                {printf("caracter: |%c|\n", linha[i]); i++; }
+                    
                     /*Adiciona os proximos 3 caracteres para a matriz*/
                     M[linhaCont][0] = linha[i++];
                     M[linhaCont][1] = linha[i++];
                     M[linhaCont][2] = linha[i++];
+                    
                     /*Ignora espaços em branco*/
-                    while(linha[i] == ' ') i++;
+                    while(linha[i] == ' ' || linha[i] == '\t') /* i++; */
+                {printf("caracter: |%c|\n", linha[i]); i++; }
+                    
                     if(linha[i]=='}')
                     {
                         i++;
                         linhaControle[k++] = linhaCont;
+                        
                         /*Ignora espaços em branco*/
-                        while(linha[i]==' ')i++;
-                        if(linha[i]>='0' && linha[i]<='9' && linha[++i]>='0' && linha[i] <= '9')
+                        while(linha[i]==' ' || linha[i] == '\t')i++;
+                        
+                        if(linha[i]>='0' && linha[i]<='9' 
+                        && linha[++i]>='0' && linha[i]<='9')
                         {
-                            /*Adiciona os proximos dois caracteres para a matriz*/
+                            /* Adiciona os próximos dois 
+                             * caracteres para a matriz*/
                             M[linhaCont][3] = linha[--i];
                             M[linhaCont][4] = linha[++i];
                             i++;
-
                         }
                     }
                     /*Caso ocorra erro de sintaxe*/
@@ -88,24 +116,27 @@ char **entrada(char *nome)
                         return NULL;
                 }
                 /*Caso ocorra erro de sintaxe*/
-                else
-                    return NULL;
+                else return NULL;
 
                 /*Ignora espaços*/
-                while(linha[i] == ' ')i++;
-                /*Ṕrocura por caracteres diferentes de ';' e '\n', se achar, significa que ocorreu erro de sintaxe*/
-                if(linha[i] != ';' && linha[i]!= '\n')
-                    return NULL;
-
+                while(linha[i] == ' ' || linha[i] == '\t')/* i++; */
+                {printf("caracter: |%c|\n", linha[i]); i++; }
+                
+                /* Procura por caracteres diferentes de ';' e '\n'.
+                 * Se achar, significa que ocorreu erro de sintaxe */
+                if(linha[i] != ';' && linha[i]!= '\n') return NULL;
             }
         }
     }
-    /*Verifica se o vetor linhaControle esta ordenado. Caso nao esteja, ocorreu um erro de sintaxe*/
+    
+    /* Verifica se o vetor linhaControle está ordenado. 
+     * Caso não esteja, ocorreu um erro de sintaxe */
     for(j=0; j<k-1;j++)
         if(linhaControle[j] > linhaControle[j+1])
             return NULL;
 
-    /*Percorre a matriz colocando '/n' na primeira coluna das linhas que nao estao em linhaControle*/
+    /* Percorre a matriz colocando '\n' na primeira coluna 
+     * das linhas que não estao em linhaControle */
     for(j=0; j<100; j++)
     {
         ligado = 0;
@@ -113,18 +144,19 @@ char **entrada(char *nome)
         {
             if(j==linhaControle[i])
                 ligado = 1;
-            /*Caso a matriz tenha uma linha em comum com
-              a linha do programa, ligado receberá valor 1,
-              ou seja... se ligado passar a ser 1, nao será
-              necessário printar \n na primeira coluna da
-              matriz*/
+            /* Caso a matriz tenha uma linha em comum com
+             * a linha do programa, ligado receberá valor 1,
+             * ou seja... se ligado passar a ser 1, não será
+             * necessário imprimir \n na primeira coluna da
+             * matriz */
         }
         if(!ligado)
             M[j][0] = '\n';
-
     }
-    /*Se chegou ate aqui, significa que a entrada esta sintaxicamente correta.
-      Instruçoes erradas serao verificadas pela proxima função*/
+    
+    /* Se chegou até aqui, significa que a entrada esta sintatica-
+     * mente correta. Instruções erradas serão verificadas pela 
+     * próxima função*/
 
     /*Fechando arquivo*/
     fclose(arq);
@@ -137,40 +169,50 @@ void saida(char **M, int fimLinha, char *nome)
     FILE *arq1;
     char *saida;
     
-    /* Cria nome da funcao de saida */
-    for(i = strlen(nome)-1; i >= 0; i--)
+    printf("entrie 1\n");
+    /* Cria nome da função de saida */
+    for(i = strlen(nome)-1; i > 0; i--)
         if(nome[i] == '.') break;
-    saida = malloc(i * sizeof(*saida));
-
-    saida = strncpy(saida, nome, i);
-    saida = strcat(saida, ".hip");
     
+    /* Se i for 0, não encontrou ',' */
+    if(i == 0) i = strlen(nome)-1;
+    printf("i: %d", i);
+    
+    saida = malloc(i * sizeof(*saida));
+    saida = strcpy(saida, nome);
+    saida = strcat(saida, ".hip");
+     
     /* Abre arquivo para ser copiado */
     if((arq1 = fopen(saida, "w")) == NULL)
     {
         printf("Erro ao abrir arquivo!!!\n");
         exit(1);
     }
-    else
-        /*Caso não dê erros na criação desse arquivo...*/
+    else /*Caso não dê erros na criação desse arquivo...*/
     {
-        for( i = 0; i<100 && i<=fimLinha; i++)
+        for( i = 0; i<80 && i<=fimLinha; i++)
             /*Percorrer todas as linhas da matriz*/
         {
-            if(M[i][0]!= '\n')
+            if(M[i][0] != '\n')
                 /*enquanto houver algum caracter na matriz*/
             {
                 for(j = 0; j<5; j++)
                 {
-                    /*Caso haja o caracter em determinada linha da matriz,
-                      imrpimir a linha no arquivo de saida */
+                    /* Caso haja o caracter em determinada linha da 
+                     * matriz, imprime a linha no arquivo de saida */
                     fputc(M[i][j],arq1);
                 }
             }
             fputc('\n', arq1);
-            /*Pula a linha de acordo com a mudança de linha da matriz percorrida*/
+            /* Pula a linha de acordo com a mudança de linha 
+             * na matriz percorrida*/
         }
-        fclose(arq1);
-        /*Fechamento do arquivo de saida */
-    }
-}
+        
+        fclose(arq1); 
+        /*Fecha arquivo de saida */
+        
+    } /*else*/
+    
+    free(saida); saida = NULL; arq1 = NULL;
+    
+} /*saida*/
