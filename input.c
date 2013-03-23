@@ -170,16 +170,24 @@ void saida(char **M, int fimLinha, char *nome)
     FILE *arq1;
     char *saida;
 
-    printf("fimLinha: %d", fimLinha);
     /* Cria nome da função de saida */
     for(i = strlen(nome)-1; i > 0; i--)
         if(nome[i] == '.') break;
 
     /* Se i for 0, não encontrou '.' */
-    if(i == 0) i = strlen(nome)-1;
-
-    saida = malloc(i * sizeof(*saida));
-    saida = strncpy(saida, nome, i);
+    if(i == 0) 
+    {
+        i = strlen(nome);
+        saida = malloc(i * sizeof(*saida));
+        saida = strcpy(saida, nome);
+    }
+    else
+    {
+        saida = malloc(i * sizeof(*saida));
+        saida = strncpy(saida, nome, i);
+    }
+    
+    /* Adiciona extensão .hip */
     saida = strcat(saida, ".hip");
 
     /* Abre arquivo para ser copiado */

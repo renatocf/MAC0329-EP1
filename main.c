@@ -10,6 +10,9 @@
 /**  Renato Cordeiro Ferreira            7990933  **/
 /**  Ruan de Menezes Costa               7990929  **/
 /**  Vinicius Nascimento Silva           7557626  **/
+/**                                               **/
+/**  Em caso de eventuais problemas, acesse:      **/
+/**  git@github.com:renatocf/MAC0323-EP1.git      **/
 /***************************************************/ 
 
 #include<stdio.h>

@@ -1,3 +1,9 @@
+; Primeiro  Exercício-Programa
+; Arquivo:  analyzer.c
+; 
+; Mais informações no arquivo main.c ou em
+; git@github.com:renatocf/MAC0323-EP1.git
+;
 ; **** UM PEQUENO PROGRAMA EM HIPO - MAIOR, MENOR E MÉDIA DE ATÉ DEZ INTEIROS ****
 ;
 ;
