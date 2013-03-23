@@ -1,7 +1,21 @@
+/***************************************************/
+/**  MAC 0329  -  Álgebra Boobleana e Aplicações  **/
+/**  IME-USP   -  Primeiro  Semestre  de    2013  **/
+/**  Turma 45  -  Junior Barrera                  **/
+/**                                               **/
+/**  Primeiro  Exercício-Programa                 **/
+/**  Arquivo:  main.c                             **/
+/**                                               **/
+/**  Karina Suemi Awoki                  7572102  **/
+/**  Renato Cordeiro Ferreira            7990933  **/
+/**  Ruan de Menezes Costa               7990929  **/
+/**  Vinicius Nascimento Silva           7557626  **/
+/***************************************************/ 
+
 #include<stdio.h>
 #include<stdlib.h>
 
-/* Libraries */
+/* BIbliotecas */
 #include "input.h"
 #include "analyzer.h"
 

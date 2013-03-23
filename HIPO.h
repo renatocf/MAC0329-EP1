@@ -1,3 +1,11 @@
+/***************************************************/
+/**  Primeiro  Exercício-Programa                 **/
+/**  Arquivo:  HIPO.h                             **/
+/**                                               **/
+/**  Mais informações no arquivo main.c ou em     **/
+/**  git@github.com:renatocf/MAC0323-EP1.git      **/
+/***************************************************/ 
+
 #ifndef H_HIPO_DEFINED
 #define H_HIPO_DEFINED
 
