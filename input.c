@@ -170,15 +170,16 @@ void saida(char **M, int fimLinha, char *nome)
     FILE *arq1;
     char *saida;
 
+    printf("fimLinha: %d", fimLinha);
     /* Cria nome da função de saida */
     for(i = strlen(nome)-1; i > 0; i--)
         if(nome[i] == '.') break;
 
-    /* Se i for 0, não encontrou ',' */
+    /* Se i for 0, não encontrou '.' */
     if(i == 0) i = strlen(nome)-1;
 
     saida = malloc(i * sizeof(*saida));
-    saida = strcpy(saida, nome);
+    saida = strncpy(saida, nome, i);
     saida = strcat(saida, ".hip");
 
     /* Abre arquivo para ser copiado */
@@ -189,7 +190,7 @@ void saida(char **M, int fimLinha, char *nome)
     }
     else /*Caso não dê erros na criação desse arquivo...*/
     {
-        for( i = 0; i<80 && i<=fimLinha; i++)
+        for( i = 0; i<=fimLinha && i<=100 ; i++)
             /*Percorrer todas as linhas da matriz*/
         {
             if(M[i][0] != '\n')

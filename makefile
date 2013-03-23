@@ -5,7 +5,6 @@
 #**  Mais informações no arquivo main.c ou em     **#
 #**  git@github.com:renatocf/MAC0323-EP1.git      **#
 #***************************************************#
-
 CC=gcc
 CFLAGS=-ansi -Wall -pedantic -O2
 RM=rm -f
